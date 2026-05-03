@@ -32,3 +32,5 @@ mongoose.connect(MONGO_URI)
     app.listen(PORT, () => console.log(`Server berjalan di port ${PORT}`));
   })
   .catch((error) => console.log('Gagal terhubung ke MongoDB:', error.message));
+
+export default app;
