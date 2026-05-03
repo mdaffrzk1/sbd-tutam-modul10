@@ -10,7 +10,9 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://ngitung-duit-frontend.vercel.app/'
+}));
 app.use(express.json()); // Untuk memparsing JSON body
 
 // Routes
