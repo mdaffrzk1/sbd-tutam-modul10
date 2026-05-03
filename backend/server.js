@@ -11,7 +11,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: 'https://ngitung-duit-frontend.vercel.app/'
+  origin: 'https://ngitung-duit-frontend.vercel.app'
 }));
 app.use(express.json()); // Untuk memparsing JSON body
 
@@ -25,13 +25,13 @@ app.get('/', (req, res) => {
 });
 
 // Koneksi ke MongoDB dan Jalankan Server
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI)
   .then(() => {
     console.log('Berhasil terhubung ke MongoDB Atlas!');
-    app.listen(PORT, () => console.log(`Server berjalan di port ${PORT}`));
+    // app.listen(PORT, () => console.log(`Server berjalan di port ${PORT}`));
   })
   .catch((error) => console.log('Gagal terhubung ke MongoDB:', error.message));
 
