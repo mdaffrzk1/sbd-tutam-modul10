@@ -19,7 +19,7 @@ app.use('/api/transactions', transactionRoutes);
 
 // Test Route
 app.get('/', (req, res) => {
-  res.send('API ngitung-duit menyala bosku!');
+  res.send('API ngitung-duit menyala');
 });
 
 // Koneksi ke MongoDB dan Jalankan Server

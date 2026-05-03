@@ -27,7 +27,7 @@ export default function Dashboard() {
   const fetchTransactions = async () => {
     try {
       const token = localStorage.getItem('token');
-      const { data } = await axios.get('http://localhost:5000/api/transactions', {
+      const { data } = await axios.get('https://ngitung-duit-backend.vercel.app/api/transactions', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTransactions(data);
@@ -41,12 +41,12 @@ export default function Dashboard() {
     const token = localStorage.getItem('token');
     try {
       if (editId) {
-        await axios.put(`http://localhost:5000/api/transactions/${editId}`, { title, amount, type }, {
+        await axios.put(`https://ngitung-duit-backend.vercel.app/api/transactions/${editId}`, { title, amount, type }, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setEditId(null);
       } else {
-        await axios.post('http://localhost:5000/api/transactions', { title, amount, type }, {
+        await axios.post('https://ngitung-duit-backend.vercel.app/api/transactions', { title, amount, type }, {
           headers: { Authorization: `Bearer ${token}` }
         });
       }
@@ -73,7 +73,7 @@ export default function Dashboard() {
     if (!window.confirm('Yakin ingin menghapus data ini?')) return;
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`http://localhost:5000/api/transactions/${id}`, {
+      await axios.delete(`https://ngitung-duit-backend.vercel.app/api/transactions/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchTransactions();

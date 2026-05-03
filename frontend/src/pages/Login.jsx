@@ -16,7 +16,7 @@ export default function Login() {
     setError('');
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
-      const { data } = await axios.post(`http://localhost:5000${endpoint}`, { username, password });
+      const { data } = await axios.post(`https://ngitung-duit-backend.vercel.app${endpoint}`, { username, password });
       
       // Simpan token & username ke localStorage
       localStorage.setItem('token', data.token);
