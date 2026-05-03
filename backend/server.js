@@ -9,11 +9,36 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
+// Middleware CORS
 app.use(cors({
   origin: 'https://ngitung-duit-frontend.vercel.app'
 }));
 app.use(express.json()); // Untuk memparsing JSON body
+
+// Memastikan koneksi DB tersedia sebelum request diproses
+const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) return;
+  
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 5000, // Menyerah setelah 5 detik jika gagal konek
+    });
+    console.log('Berhasil terhubung ke MongoDB Atlas!');
+  } catch (error) {
+    console.error('Gagal terhubung ke MongoDB:', error.message);
+    throw new Error('Database connection failed');
+  }
+};
+
+// Middleware untuk menjalankan koneksi DB di setiap request
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(500).json({ message: 'Database connection error' });
+  }
+});
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -23,16 +48,5 @@ app.use('/api/transactions', transactionRoutes);
 app.get('/', (req, res) => {
   res.send('API ngitung-duit menyala');
 });
-
-// Koneksi ke MongoDB dan Jalankan Server
-// const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI;
-
-mongoose.connect(MONGO_URI)
-  .then(() => {
-    console.log('Berhasil terhubung ke MongoDB Atlas!');
-    // app.listen(PORT, () => console.log(`Server berjalan di port ${PORT}`));
-  })
-  .catch((error) => console.log('Gagal terhubung ke MongoDB:', error.message));
 
 export default app;
